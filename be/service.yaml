@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: intens-be-service
+spec:
+  selector:
+    app: intens-be
+  type: NodePort
+  ports:
+  - port: 8000 # port over which other services inside the cluster contact this service
+    targetPort: 8000 # matches containerPort
