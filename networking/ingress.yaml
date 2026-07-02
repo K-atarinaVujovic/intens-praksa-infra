@@ -15,3 +15,13 @@ spec:
                 name: intens-be-service
                 port:
                   number: 8000
+    - host: intens.praksa
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: intens-fe-service
+                port:
+                  number: 3000
