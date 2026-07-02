@@ -1,0 +1,14 @@
+{{- range $name, $svc := .Values.services }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}-service
+spec:
+  selector:
+    app: {{ $name }}
+  type: {{ $svc.serviceType | default "NodePort" }}
+  ports:
+  - port: {{ $svc.port }}
+    targetPort: {{ $svc.serviceTargetPort }} # matches containerPort in service
+---
+{{- end }}

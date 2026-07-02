@@ -1,0 +1,31 @@
+ingress:
+  name: ingress
+
+services:
+  intens-be:
+    replicas: 2
+    image: intens-praksa-be-server:20260702122215
+    port: 8000
+    env:
+      DATABASE_URL: "postgresql://intens:intens@intens-db-service:5432/intens"
+      FRONTEND_URL: "http://intens-fe-service:3000"
+    volumeMounts:
+      - name: db-volume
+        mountPath: /app/app/db
+    volumes:
+      - name: db-volume
+        hostPath:
+          path: /data/db
+          type: DirectoryOrCreate
+    serviceTargetPort: 8000
+    host: intens-be-service
+
+  intens-fe:
+    replicas: 1
+    image: intens-praksa-fe-server:20260702113858
+    port: 3000
+    env:
+      PORT: "3000"
+      API_HOST: "intens-be-service"
+    serviceTargetPort: 3000
+    host: intens.praksa
