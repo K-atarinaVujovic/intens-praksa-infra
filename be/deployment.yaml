@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: intens-be # local identifier for container within the pod
-        image: intens-praksa-be-server:20260701135809     
+        image: intens-praksa-be-server:20260702122215 
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
