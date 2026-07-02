@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intens-be-deployment # k8s deployment identifier
+spec:
+  selector:
+    matchLabels:
+      app: intens-be # pod label, must match with container label
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: intens-be # must match above app label
+    spec:
+      containers:
+      - name: intens-be # local identifier for container within the pod
+        image: intens-praksa-be-server:20260702122215 
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://intens:intens@intens-db-service:5432/intens"
+        - name: FRONTEND_URL
+          value: "http://intens-fe-service:3000"
+        volumeMounts:
+        - name: db-volume 
+          mountPath: /app/app/db
+      volumes:
+      - name: db-volume
+        hostPath: 
+          path: /data/db
+          type: DirectoryOrCreate
