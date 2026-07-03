@@ -1,6 +1,7 @@
 ingress:
   name: ingress
 
+
 services:
   intens-be:
     replicas: 2
@@ -29,3 +30,13 @@ services:
       API_HOST: "intens-be-service"
     serviceTargetPort: 3000
     host: intens.praksa
+
+  intens-db:
+    replicas: 1
+    image: postgres:16
+    imagePullPolicy: Always
+    port: 5432
+    env:
+      POSTGRES_USER: "intens"
+      POSTGRES_PASSWORD: "intens"
+      POSTGRES_DB: "intens"
