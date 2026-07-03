@@ -1,6 +1,8 @@
 ingress:
   name: ingress
 
+persistentVolumeClaim:
+  name: intens-db
 
 services:
   intens-be:
@@ -10,14 +12,6 @@ services:
     env:
       DATABASE_URL: "postgresql://intens:intens@intens-db-service:5432/intens"
       FRONTEND_URL: "http://intens-fe-service:3000"
-    volumeMounts:
-      - name: db-volume
-        mountPath: /app/app/db
-    volumes:
-      - name: db-volume
-        hostPath:
-          path: /data/db
-          type: DirectoryOrCreate
     serviceTargetPort: 8000
     host: intens-be-service
 
@@ -40,3 +34,10 @@ services:
       POSTGRES_USER: "intens"
       POSTGRES_PASSWORD: "intens"
       POSTGRES_DB: "intens"
+    volumeMounts:
+      - name: db-data
+        mountPath: /var/lib/postgresql/data
+    volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: intens-db-pvc
