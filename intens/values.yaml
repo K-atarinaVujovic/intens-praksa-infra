@@ -30,6 +30,7 @@ services:
     image: postgres:16
     imagePullPolicy: Always
     port: 5432
+    serviceType: ClusterIP
     env:
       POSTGRES_USER: "intens"
       POSTGRES_PASSWORD: "intens"
