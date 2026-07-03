@@ -1,17 +1,20 @@
+{{- $ing := .Values.ingress }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
+  name: {{ $ing.name }}
 spec:
   ingressClassName: nginx
   rules:
-    - host: intens-be-service
+  {{- range $name, $svc := .Values.services }}
+    - host: {{ $svc.host }}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: intens-be-service
+                name: {{ $name }}-service
                 port:
-                  number: 8000
+                  number: {{ $svc.port }}
+  {{- end }}

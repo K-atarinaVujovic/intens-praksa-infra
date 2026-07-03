@@ -1,0 +1,39 @@
+{{- /* name takes the service's name, svc the content/tree */ -}}
+{{- range $name, $svc := .Values.services }} 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}-deployment # k8s deployment identifier
+spec:
+  selector:
+    matchLabels:
+      app: {{ $name }}
+  replicas: {{ $svc.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ $name }} # must match above app label
+    spec:
+      containers:
+      - name: {{ $name }} # local identifier for container within the pod
+        image: {{ $svc.image }}
+        imagePullPolicy: {{ $svc.imagePullPolicy | default "IfNotPresent" }}
+        ports:
+        - containerPort: {{ $svc.port }}
+        {{- if $svc.env }}
+        env:
+        {{- range $envName, $envVal := $svc.env}}
+        - name: {{ $envName }}
+          value: {{ $envVal | quote }}
+        {{- end }}
+        {{- end }}
+        {{- if $svc.volumeMounts }}
+        volumeMounts:
+        {{- toYaml $svc.volumeMounts | nindent 8 }}
+        {{- end }}
+      {{- if $svc.volumes }}
+      volumes:
+      {{- toYaml $svc.volumes | nindent 6 }}
+      {{- end }}
+---
+{{- end }}
