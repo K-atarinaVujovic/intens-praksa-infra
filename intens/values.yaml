@@ -1,20 +1,17 @@
 ingress:
   name: ingress
-
 persistentVolumeClaim:
   name: intens-db
-
 services:
   intens-be:
     replicas: 2
-    image: intens-praksa-be-server:20260702122215
+    image: intens-praksa-be-server:c5b4c750398a4829add35e15f0ce39662763b68e
     port: 8000
     env:
       DATABASE_URL: "postgresql://intens:intens@intens-db-service:5432/intens"
       FRONTEND_URL: "http://intens-fe-service:3000"
     serviceTargetPort: 8000
     host: intens-be-service
-
   intens-fe:
     replicas: 1
     image: intens-praksa-fe-server:20260702113858
@@ -24,7 +21,6 @@ services:
       API_HOST: "intens-be-service"
     serviceTargetPort: 3000
     host: intens.praksa
-
   intens-db:
     replicas: 1
     image: postgres:16
