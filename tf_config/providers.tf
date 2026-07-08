@@ -1,4 +1,8 @@
 terraform {
+  backend "local" {
+    path = "C:/terraform-state/intens/terraform.tfstate"
+  }
+
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
