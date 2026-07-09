@@ -6,8 +6,8 @@ resource "helm_release" "intens" {
 }
 
 resource "helm_release" "prometheus" {
-  name       = "prometheus-stack"
-  namespace  = "monitoring"
-  chart      = "oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack"
+  name      = "prometheus-stack"
+  namespace = "monitoring"
+  chart     = "oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack"
   values    = [file("${path.module}/../intens/monitoring-values.yaml")]
 }
