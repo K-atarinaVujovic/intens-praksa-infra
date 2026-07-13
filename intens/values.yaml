@@ -5,7 +5,7 @@ persistentVolumeClaim:
 services:
   intens-be:
     replicas: 2
-    image: intens-praksa-be-server:6e5cbcc1a9d118946850b367ffc4178b4e9396a5
+    image: intens-praksa-be-server:b6e13bbb38cfef3bc6f0c9e13a9e72f2119633ed
     port: 8000
     env:
       DATABASE_URL: "postgresql://intens:intens@intens-db-service:5432/intens"
