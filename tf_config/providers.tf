@@ -17,14 +17,14 @@ terraform {
 }
 
 provider "kubernetes" {
-  config_path    = "C:/Users/katarina.vujovic/.kube/config"
+  config_path    = "C:\Users\khheh\.kube\config"
   config_context = "minikube"
 }
 
 
 provider "helm" {
   kubernetes = {
-    config_path    = "C:/Users/katarina.vujovic/.kube/config"
+    config_path    = "C:\Users\khheh\.kube\config"
     config_context = "minikube"
   }
 }
