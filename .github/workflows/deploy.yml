@@ -12,7 +12,7 @@ permissions:
 jobs:
   terraform:
     name: 'Terraform'
-    runs-on: intens-pc
+    runs-on: laptop
 
     defaults:
       run:
