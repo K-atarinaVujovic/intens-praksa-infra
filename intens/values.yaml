@@ -17,7 +17,7 @@ services:
     host: intens-be-service
   intens-fe:
     replicas: 1
-    image: intens-praksa-fe-server:8a00483e93f4099c8ba75641076eea33038464fb
+    image: intens-praksa-fe-server:c4130e152c898264351c4e71da72fcde15a5625f
     port: 3000
     env:
       PORT: "3000"
