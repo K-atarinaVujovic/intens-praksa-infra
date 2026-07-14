@@ -7,7 +7,7 @@ persistentVolumeClaim:
   name: intens-db
 services:
   intens-be:
-    replicas: 2
+    replicas: 3
     image: intens-praksa-be-server:b6e13bbb38cfef3bc6f0c9e13a9e72f2119633ed
     port: 8000
     env:
