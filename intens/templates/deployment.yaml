@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ $name }}-deployment # k8s deployment identifier
+  namespace: {{ $.Release.Namespace }}
 spec:
   selector:
     matchLabels:
@@ -25,6 +26,10 @@ spec:
         {{- range $envName, $envVal := $svc.env}}
         - name: {{ $envName }}
           value: {{ $envVal | quote }}
+        {{- end }}
+        {{- if eq $name "intens-fe" }}
+        - name: API_HOST
+          value: {{ printf "%s-%s" (index $.Values.services "intens-be" "host") $.Release.Namespace | quote }}
         {{- end }}
         {{- end }}
         {{- if $svc.volumeMounts }}

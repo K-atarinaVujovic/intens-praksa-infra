@@ -3,11 +3,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $ing.name }}
+  namespace: {{ $.Release.Namespace }}
 spec:
   ingressClassName: nginx
   rules:
-  {{- range $name, $svc := .Values.services }}
-    - host: {{ $svc.host }}
+  {{- range $name := $ing.exposedServices }}
+  {{- $svc := index $.Values.services $name }}
+    - host: {{ $svc.host }}-{{ $.Release.Namespace }}
       http:
         paths:
           - path: /
