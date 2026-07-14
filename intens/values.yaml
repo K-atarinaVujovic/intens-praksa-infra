@@ -1,5 +1,8 @@
 ingress:
   name: ingress
+  exposedServices:
+    - intens-fe
+    - intens-be
 persistentVolumeClaim:
   name: intens-db
 services:
@@ -18,7 +21,6 @@ services:
     port: 3000
     env:
       PORT: "3000"
-      API_HOST: "intens-be-service"
     serviceTargetPort: 3000
     host: intens.praksa
   intens-db:

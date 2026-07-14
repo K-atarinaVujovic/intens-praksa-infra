@@ -1,0 +1,43 @@
+ingress:
+  name: ingress-dev
+  exposedServices:
+    - intens-fe-dev
+    - intens-be-dev
+persistentVolumeClaim:
+  name: intens-db-dev
+services:
+  intens-be-dev:
+    replicas: 2
+    image: intens-praksa-be-server:b6e13bbb38cfef3bc6f0c9e13a9e72f2119633ed
+    port: 8000
+    env:
+      DATABASE_URL: "postgresql://intens-dev:intens-dev@intens-db-dev-service:5432/intens-dev"
+      FRONTEND_URL: "http://intens-fe-dev-service:3000"
+    serviceTargetPort: 8000
+    host: intens-be-dev-service
+  intens-fe-dev:
+    replicas: 1
+    image: intens-praksa-fe-server:8a00483e93f4099c8ba75641076eea33038464fb
+    port: 3000
+    env:
+      PORT: "3000"
+      API_HOST: "intens-be-dev-service"
+    serviceTargetPort: 3000
+    host: intens.praksa-dev
+  intens-db-dev:
+    replicas: 1
+    image: postgres:16
+    imagePullPolicy: Always
+    port: 5432
+    serviceType: ClusterIP
+    env:
+      POSTGRES_USER: "intens-dev"
+      POSTGRES_PASSWORD: "intens-dev"
+      POSTGRES_DB: "intens-dev"
+    volumeMounts:
+      - name: db-data
+        mountPath: /var/lib/postgresql/data
+    volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: intens-db-dev-pvc
