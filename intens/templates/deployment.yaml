@@ -27,6 +27,10 @@ spec:
           value: {{ $envVal | quote }}
         {{- end }}
         {{- end }}
+        {{- if $svc.resources }}
+        resources:
+          {{- toYaml $svc.resources | nindent 10 }}
+        {{- end }}
         {{- if $svc.volumeMounts }}
         volumeMounts:
         {{- toYaml $svc.volumeMounts | nindent 8 }}
