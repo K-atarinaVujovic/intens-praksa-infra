@@ -12,6 +12,13 @@ services:
       FRONTEND_URL: "http://intens-fe-service:3000"
     serviceTargetPort: 8000
     host: intens-be-service
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 512Mi
   intens-fe:
     replicas: 1
     image: intens-praksa-fe-server:8a00483e93f4099c8ba75641076eea33038464fb
@@ -21,6 +28,13 @@ services:
       API_HOST: "intens-be-service"
     serviceTargetPort: 3000
     host: intens.praksa
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 256Mi
   intens-db:
     replicas: 1
     image: postgres:16
@@ -31,6 +45,13 @@ services:
       POSTGRES_USER: "intens"
       POSTGRES_PASSWORD: "intens"
       POSTGRES_DB: "intens"
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
     volumeMounts:
       - name: db-data
         mountPath: /var/lib/postgresql/data
